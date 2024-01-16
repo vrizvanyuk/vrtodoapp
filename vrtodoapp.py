@@ -1,5 +1,5 @@
 from kivy.config import Config
-Config.set('graphics', 'width', '300')  # Set desired width
+Config.set('graphics', 'width', '400')  # Set desired width
 Config.set('graphics', 'height', '600')  # Set desired height
 
 from datetime import datetime
