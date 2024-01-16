@@ -24,7 +24,7 @@ jobs:
       run: |
         sudo apt-get install -y python3-dev libgl1-mesa-dev
         python -m pip install --upgrade pip
-        pip install flake8 pytest kivy pytest-timeout pytest-progress  # Install Kivy, pytest-timeout, and pytest-progress
+        pip install flake8 pytest kivy pytest-timeout  # Install Kivy and pytest-timeout
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
@@ -34,4 +34,4 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest and timeout
       run: |
-        pytest --timeout=120 --progress test_vrtodoapp.py  # Set a timeout of 120 seconds (2 minutes) and enable progress reporting
+        pytest --timeout=120 -ra --durations=0 test_vrtodoapp.py  # Set a timeout of 120 seconds (2 minutes) and display test durations
