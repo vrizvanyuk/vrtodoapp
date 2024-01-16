@@ -38,6 +38,7 @@ jobs:
         sleep 5 # Give Xvfb some time to start
         Xephyr -br -ac -noreset -screen 300x600 :1 &
         sleep 5 # Give Xephyr some time to start
-    - name: Test with pytest and virtual display
+    - name: Run Tests
       run: |
-        DISPLAY=:1.0 pytest --timeout=300 -ra --durations=0 test_vrtodoapp.py  # Set a timeout of 300 seconds (5 minutes) and display test durations
+        export DISPLAY=:1.0
+        pytest --timeout=300 -ra --durations=0 test_vrtodoapp.py
