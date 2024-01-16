@@ -3,13 +3,21 @@ from kivy.app import App
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.label import Label
-from vrtodoapp import ToDoRecycleView
+from kivy.clock import Clock  # Import Clock to trigger Kivy App creation
 
 class TestTodoApp(unittest.TestCase):
 
     def setUp(self):
-        # Create an instance of the Kivy app
-        self.app = App.get_running_app()
+        # Create an instance of the Kivy app using Clock.schedule_once
+        Clock.schedule_once(self.create_app, 0)
+
+    def create_app(self, dt):
+        self.app = App()
+        self.app.run()
+
+    def tearDown(self):
+        # Close the Kivy app when the test is finished
+        self.app.stop()
 
     def test_app_initialization(self):
         self.assertIsInstance(self.app, App)
@@ -27,6 +35,7 @@ class TestTodoApp(unittest.TestCase):
     def test_todo_list_view(self):
         todo_list_view = self.app.root.children[2]
         self.assertIsInstance(todo_list_view, ToDoRecycleView)
+        # You may add more assertions here based on your specific TODO app structure
 
     def test_clear_completed_button(self):
         clear_completed_button = self.app.root.children[1]
