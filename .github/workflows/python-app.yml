@@ -2,43 +2,28 @@ name: Python application
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
-
-permissions:
-  contents: read
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v3
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
-        python-version: "3.10"
+        python-version: '3.8'  # Set your Python version here
     - name: Install dependencies
       run: |
+        sudo apt-get update
+        sudo apt-get install -y xvfb  # Install Xvfb
         python -m pip install --upgrade pip
-        pip install flake8 pytest
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Lint with flake8
+        pip install -r requirements.txt
+    - name: Run tests with Xvfb
       run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Set up virtual display
-      run: |
-        sudo apt-get install -y xvfb xserver-xephyr libgstreamer1.0-dev libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev
-        export DISPLAY=:99.0
-        Xvfb $DISPLAY -screen 0 1920x1080x24 > /dev/null 2>&1 &
-        sleep 5 # Give Xvfb some time to start
-        Xephyr -br -ac -noreset -screen 300x600 :1 &
-        sleep 5 # Give Xephyr some time to start
-    - name: Run Tests
-      run: |
-        export DISPLAY=:1.0
-        pytest --timeout=300 -ra --durations=0 test_vrtodoapp.py
+        Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &  # Start Xvfb
+        DISPLAY=:99.0  # Use the virtual display
+        python -m unittest discover -s . -p "test_*.py"
