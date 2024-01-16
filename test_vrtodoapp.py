@@ -13,9 +13,11 @@ class TestTodoApp(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        # Set up and run the Kivy app before the tests
+        # Set the desired width and height here
         Config.set('graphics', 'width', '300')
         Config.set('graphics', 'height', '600')
+
+        # Set up and run the Kivy app before the tests
         cls.app = App()
         cls.app.run()
 
