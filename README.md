@@ -15,5 +15,8 @@ Buttons:
   Add ToDo - will add the string from the first input field to the list and assign it a number
   Complete Todo - Item will remain in the GUI and marked as completed(strikethrough)
 
-  Regards,
-  VR
+Bonus:
+Unit test CI/CD via test_vrtodoapp.py requirements.txt and main.yml in the workflow.
+
+Regards,
+VR
