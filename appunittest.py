@@ -25,8 +25,7 @@ class TestTodoApp(unittest.TestCase):
 
     def test_todo_list_view(self):
         todo_list_view = self.app.root.children[2]
-        self.assertIsInstance(todo_list_view, ListView)
-        # You may add more assertions here based on your specific TODO app structure
+        self.assertIsInstance(todo_list_view, ToDoRecycleView)
 
     def test_clear_completed_button(self):
         clear_completed_button = self.app.root.children[1]
