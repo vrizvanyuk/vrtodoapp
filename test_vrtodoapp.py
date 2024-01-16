@@ -14,7 +14,8 @@ class TestTodoApp(unittest.TestCase):
 
     def test_add_todo(self):
         initial_count = len(self.app.todos)
-        self.app.add_todo("New Todo")  # Corrected to match your application's structure
+        self.app.new_todo.text = "New Todo"  # Set the text for the new todo
+        self.app.add_todo(None)  # You can pass None or a mock object here
         new_count = len(self.app.todos)
         self.assertEqual(new_count, initial_count + 1)
 
