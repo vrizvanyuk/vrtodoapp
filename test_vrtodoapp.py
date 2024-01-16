@@ -3,22 +3,26 @@ from kivy.app import App
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.label import Label
-from kivy.clock import Clock  # Import Clock to trigger Kivy App creation
+from kivy.clock import Clock
+from kivy.config import Config
+
+# Import the ToDoRecycleView class from Kivy app
 from vrtodoapp import ToDoRecycleView
 
 class TestTodoApp(unittest.TestCase):
 
-    def setUp(self):
-        # Create an instance of the Kivy app using Clock.schedule_once
-        Clock.schedule_once(self.create_app, 0)
+    @classmethod
+    def setUpClass(cls):
+        # Set up and run the Kivy app before the tests
+        Config.set('graphics', 'width', '300')
+        Config.set('graphics', 'height', '600')
+        cls.app = App()
+        cls.app.run()
 
-    def create_app(self, dt):
-        self.app = App()
-        self.app.run()
-
-    def tearDown(self):
-        # Close the Kivy app when the test is finished
-        self.app.stop()
+    @classmethod
+    def tearDownClass(cls):
+        # Close the Kivy app after running all tests
+        cls.app.stop()
 
     def test_app_initialization(self):
         self.assertIsInstance(self.app, App)
