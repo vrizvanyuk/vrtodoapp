@@ -1,1 +1,2 @@
 pytest-timeout==2.2.0
+kivy==2.0.0
