@@ -11,7 +11,6 @@ permissions:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -20,11 +19,10 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: "3.10"
-    - name: Install Kivy and dependencies
+    - name: Install dependencies
       run: |
-        sudo apt-get install -y python3-dev libgl1-mesa-dev
         python -m pip install --upgrade pip
-        pip install flake8 pytest kivy pytest-timeout  # Install Kivy and pytest-timeout
+        pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
@@ -32,6 +30,14 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest and timeout
+    - name: Set up virtual display
       run: |
-        pytest --timeout=120 -ra --durations=0 test_vrtodoapp.py  # Set a timeout of 120 seconds (2 minutes) and display test durations
+        sudo apt-get install -y xvfb xserver-xephyr
+        export DISPLAY=:99.0
+        Xvfb $DISPLAY -screen 0 1920x1080x24 > /dev/null 2>&1 &
+        sleep 5 # Give Xvfb some time to start
+        Xephyr -br -ac -noreset -screen 300x600 :1 &
+        sleep 5 # Give Xephyr some time to start
+    - name: Test with pytest and virtual display
+      run: |
+        DISPLAY=:1.0 pytest --timeout=300 -ra --durations=0 test_vrtodoapp.py  # Set a timeout of 300 seconds (5 minutes) and display test durations
