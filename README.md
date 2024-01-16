@@ -16,7 +16,7 @@ Buttons:
   Complete Todo - Item will remain in the GUI and marked as completed(strikethrough)
 
 Bonus:
-Unit test CI/CD via test_vrtodoapp.py requirements.txt and main.yml in the workflow.
+\n Unit test CI/CD via test_vrtodoapp.py requirements.txt and main.yml in the workflow.
 
 Regards,
 VR
