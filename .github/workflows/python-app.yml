@@ -20,10 +20,11 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: "3.10"
-    - name: Install dependencies
+    - name: Install Kivy and dependencies
       run: |
+        sudo apt-get install -y python3-dev libgl1-mesa-dev
         python -m pip install --upgrade pip
-        pip install flake8 pytest
+        pip install flake8 pytest kivy  # Install Kivy here
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
@@ -33,8 +34,4 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest test_vrtodoapp.py  # Add this line to run your test_vrtodoapp.py file
-
-        # If you have other test files, you can include them as well, e.g.,
-        # pytest test_vrtodoapp.py other_test_file.py
-        
+        pytest test_vrtodoapp.py
