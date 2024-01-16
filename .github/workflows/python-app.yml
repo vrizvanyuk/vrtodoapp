@@ -32,7 +32,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Set up virtual display
       run: |
-        sudo apt-get install -y xvfb xserver-xephyr
+        sudo apt-get install -y xvfb xserver-xephyr libgstreamer1.0-dev libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev libpangoft2-1.0-0 libpangoft2-dev
         export DISPLAY=:99.0
         Xvfb $DISPLAY -screen 0 1920x1080x24 > /dev/null 2>&1 &
         sleep 5 # Give Xvfb some time to start
