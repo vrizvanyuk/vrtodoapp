@@ -27,7 +27,7 @@ ________________________________________________________________________________
 
 Bonus:
 
-Unit test CI/CD via test_vrtodoapp.py requirements.txt and main.yml in the workflow.
+Unit test mini CI/CD workflow via test_vrtodoapp.py requirements.txt and main.yml in the workflow directory.
 _______________________________________________________________________________________________________________________________
 
 Regards,
